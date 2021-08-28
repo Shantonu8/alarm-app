@@ -92,8 +92,8 @@ class ClockPainter extends CustomPainter {
     canvas.drawCircle(center, radius - 40, fillBrush);
     canvas.drawCircle(center, radius - 40 , outlineBrush);
 
-    var hourHandX = centerX + 60 * cos(dateTime.hour * 30 + dateTime.minute* 0.5 *pi/180);
-    var hourHandY = centerX + 60 * sin(dateTime.hour * 30 +  dateTime.minute * 0.5* pi/180);
+    var hourHandX = centerX + 60 * cos((dateTime.hour * 30 +  dateTime.minute * 0.5) *pi/180);
+    var hourHandY = centerX + 60 * sin((dateTime.hour * 30 +  dateTime.minute * 0.5) * pi/180);
     canvas.drawLine(center, Offset(hourHandX,hourHandY), hourHandBrush);
 
 
