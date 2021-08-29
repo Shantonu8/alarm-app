@@ -1,11 +1,9 @@
 import 'dart:async';
-
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_alarm_app/clock_view.dart';
 
 var now = DateTime.now();
-var nowMinute = now.minute.toString().padLeft(2, "0");
-var nowHour = now.hour.toString().padLeft(2, "0");
 var nowDate = now.day.toString();
 var nowDay = now.weekday;
 var nowMonth = now.month;
@@ -82,14 +80,30 @@ String determineMonth(){
 String weekDay = determineDay();
 String month = determineMonth();
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
 
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  var _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       backgroundColor: Color(0xFF2D2F41),
+      bottomNavigationBar: SalomonBottomBar(
+        currentIndex: _currentIndex, onTap: (i) => setState(() => _currentIndex = i),
+        items: [
+          SalomonBottomBarItem(icon: Icon(Icons.home), title: Text("Home"), selectedColor: Colors.pink, unselectedColor: Colors.white),
+          SalomonBottomBarItem(icon: Icon(Icons.add), title: Text("Alarm"), selectedColor: Colors.yellow, unselectedColor: Colors.white),
+          SalomonBottomBarItem(icon: Icon(Icons.timer), title: Text("Timer"), selectedColor: Colors.orange, unselectedColor: Colors.white),
+          SalomonBottomBarItem(icon: Icon(Icons.watch), title: Text("Stopwatch"), selectedColor: Colors.cyan, unselectedColor: Colors.white)
+        ],
+    ),
       body: Container(
         alignment: Alignment.center,
         color: Color(0xFF2D2F41),
@@ -104,7 +118,6 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
 }
 class ClockInfo extends StatefulWidget {
   const ClockInfo({Key? key}) : super(key: key);
@@ -114,10 +127,15 @@ class ClockInfo extends StatefulWidget {
 }
 
 class _ClockInfoState extends State<ClockInfo> {
+  String nowMinute = '', nowHour = '', nowSeconds = '';
+
   @override
   void initState() {
-    Timer.periodic(Duration(seconds: 1), (timer){
+    Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
+        nowMinute = DateTime.now().minute.toString().padLeft(2, "0");
+        nowHour = DateTime.now().hour.toString().padLeft(2, "0");
+        // nowSeconds = DateTime.now().second.toString().padLeft(2, "0");
       });
     });
     super.initState();
@@ -129,7 +147,7 @@ class _ClockInfoState extends State<ClockInfo> {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 110, 0, 20),
           child: Text(
-            nowHour + ":" + nowMinute,
+            nowHour + ":" + nowMinute ,
             style: TextStyle(
                 fontSize: 60,
                 color:  Colors.white
