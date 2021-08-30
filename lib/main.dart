@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'homepage.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,6 +14,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Weather Alarm App',
       theme: ThemeData(
+        // textTheme: GoogleFonts.avenirTextTheme(
+        // Theme.of(context).textTheme,),
+        fontFamily: "Avenir",
         primarySwatch: Colors.blue,
       ),
       home: HomePage(),

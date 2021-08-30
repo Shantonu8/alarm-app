@@ -2,11 +2,16 @@ import 'dart:async';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_alarm_app/clock_view.dart';
-
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 var now = DateTime.now();
 var nowDate = now.day.toString();
 var nowDay = now.weekday;
 var nowMonth = now.month;
+var timezoneName= now.timeZoneName;
+var utcTime = now.timeZoneOffset;
+String finalUTCTime = utcTime.toString();
+
 
 
 String determineDay(){
@@ -34,6 +39,7 @@ String determineDay(){
   else {
     return "error";
   }
+
 }
 String determineMonth(){
   if (nowMonth == 1) {
@@ -95,24 +101,55 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: Color(0xFF2D2F41),
-      bottomNavigationBar: SalomonBottomBar(
+       bottomNavigationBar:
+    SalomonBottomBar(
         currentIndex: _currentIndex, onTap: (i) => setState(() => _currentIndex = i),
         items: [
           SalomonBottomBarItem(icon: Icon(Icons.home), title: Text("Home"), selectedColor: Colors.pink, unselectedColor: Colors.white),
           SalomonBottomBarItem(icon: Icon(Icons.add), title: Text("Alarm"), selectedColor: Colors.yellow, unselectedColor: Colors.white),
-          SalomonBottomBarItem(icon: Icon(Icons.timer), title: Text("Timer"), selectedColor: Colors.orange, unselectedColor: Colors.white),
-          SalomonBottomBarItem(icon: Icon(Icons.watch), title: Text("Stopwatch"), selectedColor: Colors.cyan, unselectedColor: Colors.white)
+          SalomonBottomBarItem(icon: Icon(Icons.timer), title: Text("Stopwatch"), selectedColor: Colors.orange, unselectedColor: Colors.white),
+          SalomonBottomBarItem(icon: Icon(Icons.watch), title: Text("Timer"), selectedColor: Colors.cyan, unselectedColor: Colors.white)
         ],
     ),
+      appBar: AppBar(
+        title: Padding(
+          padding: const EdgeInsets.only(left: 40.0),
+          child: Text("Clock", style: TextStyle(
+            fontSize: 20
+          ),),
+        ),
+        elevation: 0,
+        backgroundColor:  Color(0xFF2D2F41),
+      ),
       body: Container(
         alignment: Alignment.center,
         color: Color(0xFF2D2F41),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             ClockInfo(),
             ClockView(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0,),
+              child: Text(
+                "Timezone" ,
+                style: TextStyle(
+                    fontSize: 20,
+                    color:  Colors.white
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+              child: Text(
+                 "🌐     "+ "UTC " + "+" + finalUTCTime[0] + finalUTCTime[1] + finalUTCTime[2] + finalUTCTime[3],
+                style: TextStyle(
+                    fontSize: 15,
+                    color:  Colors.white,
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -135,6 +172,8 @@ class _ClockInfoState extends State<ClockInfo> {
       setState(() {
         nowMinute = DateTime.now().minute.toString().padLeft(2, "0");
         nowHour = DateTime.now().hour.toString().padLeft(2, "0");
+        // print(UtcTime);
+        // print(isUTC);
         // nowSeconds = DateTime.now().second.toString().padLeft(2, "0");
       });
     });
@@ -143,26 +182,29 @@ class _ClockInfoState extends State<ClockInfo> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 110, 0, 20),
+          padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
           child: Text(
             nowHour + ":" + nowMinute ,
             style: TextStyle(
-                fontSize: 60,
-                color:  Colors.white
+                fontSize: 80,
+                color:  Colors.white,
+              fontWeight: FontWeight.w100
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 10.0),
+          padding: const EdgeInsets.fromLTRB(3, 0, 0, 30.0),
           child: Text(
             weekDay[0]+
                 weekDay[1]+
                 weekDay[2] + ", " + nowDate + " " + month[0] + month[1] + month[2] ,
             style: TextStyle(
-                fontSize: 20,
-                color:  Colors.white
+                fontSize: 15,
+                color:  Colors.white,
+              fontWeight: FontWeight.w300
             ),
           ),
         ),
