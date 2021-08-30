@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_alarm_app/alarmscreen.dart';
 import 'homepage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,7 +20,11 @@ class MyApp extends StatelessWidget {
         fontFamily: "Avenir",
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      initialRoute: "/",
+      routes: {
+        "/": (context) => HomePage(),
+        "/alarm": (context) => AlarmScreen(),
+      },
     );
   }
 }

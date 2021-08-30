@@ -2,8 +2,6 @@ import 'dart:async';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_alarm_app/clock_view.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:google_fonts/google_fonts.dart';
 var now = DateTime.now();
 var nowDate = now.day.toString();
 var nowDay = now.weekday;
@@ -103,7 +101,12 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color(0xFF2D2F41),
        bottomNavigationBar:
     SalomonBottomBar(
-        currentIndex: _currentIndex, onTap: (i) => setState(() => _currentIndex = i),
+        currentIndex: _currentIndex, onTap: (i) {
+          setState(() {
+            _currentIndex = i;
+          });
+
+    },
         items: [
           SalomonBottomBarItem(icon: Icon(Icons.home), title: Text("Home"), selectedColor: Colors.pink, unselectedColor: Colors.white),
           SalomonBottomBarItem(icon: Icon(Icons.add), title: Text("Alarm"), selectedColor: Colors.yellow, unselectedColor: Colors.white),
@@ -115,7 +118,7 @@ class _HomePageState extends State<HomePage> {
         title: Padding(
           padding: const EdgeInsets.only(left: 40.0),
           child: Text("Clock", style: TextStyle(
-            fontSize: 20
+              fontSize: 20
           ),),
         ),
         elevation: 0,
@@ -212,4 +215,6 @@ class _ClockInfoState extends State<ClockInfo> {
     );
   }
 }
+
+
 
