@@ -102,9 +102,15 @@ class _HomePageState extends State<HomePage> {
        bottomNavigationBar:
     SalomonBottomBar(
         currentIndex: _currentIndex, onTap: (i) {
+          // if(i == 1 ){
+          //   Navigator.pushNamed(context, "/alarm");
+          // }
           setState(() {
             _currentIndex = i;
           });
+          if(i == 1 ){
+            Navigator.pushNamed(context, "/alarm");
+          }
 
     },
         items: [
@@ -116,7 +122,7 @@ class _HomePageState extends State<HomePage> {
     ),
       appBar: AppBar(
         title: Padding(
-          padding: const EdgeInsets.only(left: 40.0),
+          padding: const EdgeInsets.only(left: 45.0),
           child: Text("Clock", style: TextStyle(
               fontSize: 20
           ),),
@@ -134,7 +140,7 @@ class _HomePageState extends State<HomePage> {
             ClockInfo(),
             ClockView(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0,),
+              padding: const EdgeInsets.fromLTRB(10, 30, 0, 0,),
               child: Text(
                 "Timezone" ,
                 style: TextStyle(
@@ -144,7 +150,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+              padding: const EdgeInsets.fromLTRB(10, 20, 0, 20),
               child: Text(
                  "🌐     "+ "UTC " + "+" + finalUTCTime[0] + finalUTCTime[1] + finalUTCTime[2] + finalUTCTime[3],
                 style: TextStyle(
@@ -167,7 +173,7 @@ class ClockInfo extends StatefulWidget {
 }
 
 class _ClockInfoState extends State<ClockInfo> {
-  String nowMinute = '', nowHour = '', nowSeconds = '';
+  String nowMinute = '00', nowHour = '00', nowSeconds = '';
 
   @override
   void initState() {
@@ -188,18 +194,19 @@ class _ClockInfoState extends State<ClockInfo> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+          padding: const EdgeInsets.only(top: 30.0),
           child: Text(
             nowHour + ":" + nowMinute ,
             style: TextStyle(
                 fontSize: 80,
                 color:  Colors.white,
-              fontWeight: FontWeight.w100
+              // fontWeight: FontWeight.w100,
             ),
+            textAlign: TextAlign.start,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(3, 0, 0, 30.0),
+          padding: const EdgeInsets.fromLTRB(10, 0, 0, 30.0),
           child: Text(
             weekDay[0]+
                 weekDay[1]+
