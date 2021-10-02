@@ -93,15 +93,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       backgroundColor: Color(0xFF2D2F41),
-      appBar: AppBar(
+      appBar:AppBar(
         title: Padding(
-          padding: const EdgeInsets.only(left: 45.0),
+          padding: const EdgeInsets.only(left: 42.0),
           child: Text("Clock", style: TextStyle(
               fontSize: 20
           ),),
@@ -109,7 +108,9 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         backgroundColor:  Color(0xFF2D2F41),
       ),
-      body: Container(
+      body:
+
+      Container(
         alignment: Alignment.center,
         color: Color(0xFF2D2F41),
         child: Column(
@@ -119,7 +120,7 @@ class _HomePageState extends State<HomePage> {
             ClockInfo(),
             ClockView(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 30, 0, 0,),
+              padding: const EdgeInsets.fromLTRB(0, 30, 0, 0,),
               child: Text(
                 "Timezone" ,
                 style: TextStyle(
@@ -129,7 +130,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 20, 0, 20),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
               child: Text(
                  "🌐     "+ "UTC " + "+" + finalUTCTime[0] + finalUTCTime[1] + finalUTCTime[2] + finalUTCTime[3],
                 style: TextStyle(
@@ -144,6 +145,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+
+
 class ClockInfo extends StatefulWidget {
   const ClockInfo({Key? key}) : super(key: key);
 
@@ -153,20 +157,20 @@ class ClockInfo extends StatefulWidget {
 
 class _ClockInfoState extends State<ClockInfo> {
   String nowMinute = '00', nowHour = '00', nowSeconds = '';
-
+  late Timer timer;
   @override
   void initState() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (mounted) {setState(() {
         nowMinute = DateTime.now().minute.toString().padLeft(2, "0");
         nowHour = DateTime.now().hour.toString().padLeft(2, "0");
-        // print(UtcTime);
-        // print(isUTC);
-        // nowSeconds = DateTime.now().second.toString().padLeft(2, "0");
-      });
+      });}
     });
     super.initState();
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -185,7 +189,7 @@ class _ClockInfoState extends State<ClockInfo> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(10, 0, 0, 30.0),
+          padding: const EdgeInsets.fromLTRB(3, 0, 0, 30.0),
           child: Text(
             weekDay[0]+
                 weekDay[1]+

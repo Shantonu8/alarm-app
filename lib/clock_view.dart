@@ -11,14 +11,37 @@ class ClockView extends StatefulWidget {
 }
 
 class _ClockViewState extends State<ClockView> {
+  late Timer timer;
+  bool timerCancelled = false;
+
   @override
   void initState() {
-    Timer.periodic(Duration(seconds: 1), (timer){
-      setState(() {
-
+    timer = Timer.periodic(Duration(seconds: 1), (timer){
+      if (mounted) {setState(() {
       });
+      }
+      // print(timerCancelled); Debug Line
+      if(timerCancelled){
+        timer.cancel();
+      }
     });
     super.initState();
+  }
+
+  @override
+  void deactivate() {
+    timerCancelled = true;
+    timer.cancel();
+    print(timerCancelled);
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    timerCancelled = true;
+    timer.cancel();
+    print(timerCancelled);
+    super.dispose();
   }
 
 
