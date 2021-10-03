@@ -9,10 +9,6 @@ class AlarmInfo {
 
 
 
-  AlarmInfo(this.alarmDateTime,  this.description, this.isActive, this.gradientColors)
-
-
-{}
-
+  AlarmInfo(this.alarmDateTime,  this.description, this.isActive, this.gradientColors);
 
 }
