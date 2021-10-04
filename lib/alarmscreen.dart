@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 // ignore: unnecessary_import
 import 'package:flutter/rendering.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:weather_alarm_app/main.dart';
 import 'constants/custom_app_bar.dart';
 import 'data/data.dart';
 
@@ -105,7 +107,9 @@ class _AlarmScreenState extends State<AlarmScreen> {
                       ],
                       mainAxisAlignment: MainAxisAlignment.center,
                     ),
-                    onPressed: (){},
+                    onPressed: (){
+                      scheduleAlarm();
+                    },
                   ),
                 ),
               ]).toList(),
@@ -116,4 +120,20 @@ class _AlarmScreenState extends State<AlarmScreen> {
       )
     );
   }
+}
+
+
+void scheduleAlarm ()  async{
+  var scheduleNotificationDateTime = DateTime.now().add(Duration(seconds: 10));
+  var androidPlatformChannelSpecifics = AndroidNotificationDetails('alarm_notif', 'alarm_notif', 'Channel for Alarm Notification', icon: 'clock', sound: RawResourceAndroidNotificationSound('sound'), largeIcon: DrawableResourceAndroidBitmap('clock'));
+
+  var iOSPlatformChannelSpecifics = IOSNotificationDetails(
+    sound: '',
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true
+  );
+  var platformChannelSpecifics = NotificationDetails(
+    android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics); await flutterLocalNotificationsPlugin.schedule(0, 'Office', 'Time for Office! Good Morning', scheduleNotificationDateTime, platformChannelSpecifics);
+
 }
