@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_alarm_app/clock_view.dart';
+import 'package:weather_alarm_app/constants/custom_app_bar.dart';
+import 'constants/clock_info.dart';
+import 'constants/custom_app_bar.dart';
 var now = DateTime.now();
 var nowDate = now.day.toString();
 var nowDay = now.weekday;
@@ -98,18 +101,9 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: Color(0xFF2D2F41),
-      appBar:AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 42.0),
-          child: Text("Clock", style: TextStyle(
-              fontSize: 20
-          ),),
-        ),
-        elevation: 0,
-        backgroundColor:  Color(0xFF2D2F41),
-      ),
+      appBar:PreferredSize(preferredSize: Size.fromHeight(50),
+      child: CustomAppBar("Clock")),
       body:
-
       Container(
         alignment: Alignment.center,
         color: Color(0xFF2D2F41),
@@ -147,64 +141,6 @@ class _HomePageState extends State<HomePage> {
 }
 
 
-
-class ClockInfo extends StatefulWidget {
-  const ClockInfo({Key? key}) : super(key: key);
-
-  @override
-  _ClockInfoState createState() => _ClockInfoState();
-}
-
-class _ClockInfoState extends State<ClockInfo> {
-  String nowMinute = '00', nowHour = '00', nowSeconds = '';
-  late Timer timer;
-  @override
-  void initState() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (mounted) {setState(() {
-        nowMinute = DateTime.now().minute.toString().padLeft(2, "0");
-        nowHour = DateTime.now().hour.toString().padLeft(2, "0");
-      });}
-    });
-    super.initState();
-  }
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 30.0),
-          child: Text(
-            nowHour + ":" + nowMinute ,
-            style: TextStyle(
-                fontSize: 80,
-                color:  Colors.white,
-              // fontWeight: FontWeight.w100,
-            ),
-            textAlign: TextAlign.start,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(3, 0, 0, 30.0),
-          child: Text(
-            weekDay[0]+
-                weekDay[1]+
-                weekDay[2] + ", " + nowDate + " " + month[0] + month[1] + month[2] ,
-            style: TextStyle(
-                fontSize: 15,
-                color:  Colors.white,
-              fontWeight: FontWeight.w300
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 
 

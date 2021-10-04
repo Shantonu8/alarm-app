@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+// ignore: unnecessary_import
 import 'package:flutter/rendering.dart';
+import 'constants/custom_app_bar.dart';
 import 'data/data.dart';
 
 class AlarmScreen extends StatefulWidget {
@@ -15,17 +17,8 @@ class _AlarmScreenState extends State<AlarmScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF2D2F41),
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.fromLTRB(35, 10, 0, 0),
-          child: Text("Alarm", style: TextStyle(
-              fontSize: 20
-          ),),
-        ),
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        backgroundColor:  Color(0xFF2D2F41),
-      ),
+      appBar: PreferredSize(preferredSize: Size.fromHeight(50),
+          child: CustomAppBar("Alarm")),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget> [
@@ -45,21 +38,28 @@ class _AlarmScreenState extends State<AlarmScreen> {
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.label, color: Colors.white, size: 24,),
+                              Icon(Icons.label, color: Colors.white, size:
+                              24,),
                               SizedBox(width: 8,),
-                              Text('Office', style: TextStyle(color: Colors.white, fontFamily: 'avenir'),),
+                              Text('Office', style: TextStyle(color:
+                              Colors.white, fontFamily: 'avenir'),),
                             ],
                           ),
-                          Switch(value: true, onChanged: (bool value){}, activeColor: Colors.white,)
+                          Switch(value: true, onChanged: (bool value){},
+                            activeColor: Colors.white,)
                         ],
                       ),
-                      Text('Mon-Fri', style: TextStyle(color: Colors.white, fontFamily: 'avenir'),),
+                      Text('Mon-Fri', style: TextStyle(color:
+                      Colors.white, fontFamily: 'avenir'),),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('07:00 AM', style: TextStyle(color: Colors.white, fontFamily: 'avenir', fontWeight: FontWeight.w700, fontSize: 24),),
-                          Icon(Icons.keyboard_arrow_down,size: 36, color: Colors.white,)
-
+                          Text('07:00 AM', style: TextStyle(color:
+                          Colors.white, fontFamily: 'avenir',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 24),),
+                          Icon(Icons.keyboard_arrow_down,size: 36,
+                            color: Colors.white,)
                         ],
                       ),
                     ],
@@ -73,7 +73,8 @@ class _AlarmScreenState extends State<AlarmScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(24)),
                     boxShadow: [
                       BoxShadow(
-                        color: alarms.gradientColors.last.withOpacity(0.4), blurRadius: 5, spreadRadius: 2, offset: Offset(4,4)
+                        color: alarms.gradientColors.last.withOpacity(0.4),
+                          blurRadius: 5, spreadRadius: 2, offset: Offset(4,4)
                       )
                     ]
                   ),
@@ -91,7 +92,8 @@ class _AlarmScreenState extends State<AlarmScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Icon(Icons.control_point, color: Colors.white, size: 30,),
+                        Icon(Icons.control_point, color: Colors.white,
+                          size: 30,),
                         SizedBox(height: 8,),
                         Center(
                           child: Text('Add Alarm', style: TextStyle(
