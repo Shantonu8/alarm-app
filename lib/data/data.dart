@@ -2,12 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:weather_alarm_app/models/alarm_info.dart';
 
 List<AlarmInfo> alarms = [
-  AlarmInfo(DateTime.now().add(Duration(hours: 1)), 'Office', false, GradientColors.sky),
-  AlarmInfo(DateTime.now().add(Duration(hours: 1)), 'Office', false, GradientColors.sunset),
-  AlarmInfo(DateTime.now().add(Duration(hours: 1)), 'Office', false, GradientColors.sea),
-  AlarmInfo(DateTime.now().add(Duration(hours: 1)), 'Office', false, GradientColors.mango),
-  AlarmInfo(DateTime.now().add(Duration(hours: 1)), 'Office', false, GradientColors.fire),
-  AlarmInfo(DateTime.now().add(Duration(hours: 1)), 'Office', false, GradientColors.sky),
+ AlarmInfo(id: 1, title: 'Office', dateTime: DateTime.now(), isPending: true, gradientColorIndex: 1)
 ];
 
 
@@ -19,3 +14,5 @@ class GradientColors{
  static List<Color> fire =  [Color(0xffff5dcd), Color(0xffff8484)];
 
 }
+
+

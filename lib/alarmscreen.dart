@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-// ignore: unnecessary_import
-import 'package:flutter/rendering.dart';
+import 'package:flutter/rendering.dart' show Alignment, BorderRadius, BoxDecoration, BoxShadow, Color, CrossAxisAlignment, EdgeInsets, FontWeight, LinearGradient, MainAxisAlignment, Offset, Radius, Size, TextStyle;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:weather_alarm_app/main.dart';
 import 'constants/custom_app_bar.dart';
 import 'data/data.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 class AlarmScreen extends StatefulWidget {
   const AlarmScreen({Key? key}) : super(key: key);
@@ -26,9 +26,9 @@ class _AlarmScreenState extends State<AlarmScreen> {
         children: <Widget> [
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 45),
+              padding: EdgeInsets.symmetric(horizontal: 45, vertical: 10),
               child: ListView(
-              children: alarms.map((alarms) {
+              children: alarms.map<Widget>((alarms) {
                 return Container(
                   margin: EdgeInsets.only(bottom: 32),
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -68,49 +68,65 @@ class _AlarmScreenState extends State<AlarmScreen> {
                   ),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: alarms.gradientColors,
+                      colors:  GradientColors.sunset,
                         begin: Alignment.centerLeft,
                       end: Alignment.centerRight
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(24)),
                     boxShadow: [
                       BoxShadow(
-                        color: alarms.gradientColors.last.withOpacity(0.4),
+                        color: GradientColors.sunset.last.withOpacity(0.4),
                           blurRadius: 5, spreadRadius: 2, offset: Offset(4,4)
                       )
                     ]
                   ),
                 );
               }).followedBy([
-                Container(
+                DottedBorder(
+                  child: Container(
                   decoration: BoxDecoration(
-                    color: Color(0xff3C3F69),
-                      borderRadius: BorderRadius.all(Radius.circular(24))
-                  ),
-                alignment: Alignment.center,
-                  // color: Colors.red,
-                  height: 110,
-                  child: MaterialButton(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Icon(Icons.control_point, color: Colors.white,
-                          size: 30,),
-                        SizedBox(height: 8,),
-                        Center(
-                          child: Text('Add Alarm', style: TextStyle(
-                            fontSize: 15, fontFamily: 'avenir',
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                          ),),
-                        )
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      color: Color(0xff3C3F69),
+                        borderRadius: BorderRadius.all(Radius.circular(24))
                     ),
-                    onPressed: (){
-                      scheduleAlarm();
-                    },
+                  alignment: Alignment.center,
+                    // color: Colors.red,
+                    height: 110,
+                    child: MaterialButton(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Icon(Icons.control_point, color: Colors.white,
+                            size: 30,),
+                          SizedBox(height: 8,),
+                          Center(
+                            child: Text('Add Alarm', style: TextStyle(
+                              fontSize: 15, fontFamily: 'avenir',
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                            ),),
+                          )
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                      onPressed: (){
+                        showModalBottomSheet(context: context, builder: (context){
+                          return Container(
+                            color: Colors.white,
+                            height: 100,
+                          );
+                        },
+                        );
+
+
+                        // scheduleAlarm();
+                      },
+                    ),
                   ),
+                  strokeWidth: 3,
+                  color: Colors.white,
+                  borderType: BorderType.RRect,
+                  radius: Radius.circular(24),
+                  dashPattern: [6, 6, 6],
                 ),
               ]).toList(),
     ),
@@ -135,5 +151,6 @@ void scheduleAlarm ()  async{
   );
   var platformChannelSpecifics = NotificationDetails(
     android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics); await flutterLocalNotificationsPlugin.schedule(0, 'Office', 'Time for Office! Good Morning', scheduleNotificationDateTime, platformChannelSpecifics);
-
 }
+
+
