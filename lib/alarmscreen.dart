@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show Alignment, BorderRadius, BoxDecoration, BoxShadow, Color, CrossAxisAlignment, EdgeInsets, FontWeight, LinearGradient, MainAxisAlignment, Offset, Radius, Size, TextStyle;
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:weather_alarm_app/main.dart';
 import 'constants/custom_app_bar.dart';
@@ -111,8 +112,41 @@ class _AlarmScreenState extends State<AlarmScreen> {
                       onPressed: (){
                         showModalBottomSheet(context: context, builder: (context){
                           return Container(
-                            color: Colors.white,
-                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 20.0),
+                                    child: Text("Add Alarm", style: TextStyle(
+                                      fontFamily: 'avenir',
+                                      fontSize: 20,
+
+                                    ),),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(30, 20, 30, 0),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Set time', style: TextStyle(
+                                        fontFamily: 'avenir',
+                                        fontSize: 20
+                                      ),
+                                      ),
+                                      IconButton(onPressed: (){}, icon: Icon(
+                                        Icons.keyboard_arrow_right
+                                      ),
+                                      )
+                                    ],
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  )
+                                )
+                              ],
+                            ),
                           );
                         },
                         );
