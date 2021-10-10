@@ -17,6 +17,7 @@ Widget build(BuildContext context) {
     ),
     elevation: 0,
     backgroundColor:  Color(0xFF2D2F41),
+    automaticallyImplyLeading: false,
   );
 }
 }

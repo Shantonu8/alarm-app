@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart' show Alignment, BorderRadius, BoxDecoration, BoxShadow, Color, CrossAxisAlignment, EdgeInsets, FontWeight, LinearGradient, MainAxisAlignment, Offset, Radius, Size, TextStyle;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:weather_alarm_app/add_alarm_screen.dart';
 import 'package:weather_alarm_app/main.dart';
 import 'constants/custom_app_bar.dart';
 import 'data/data.dart';
@@ -110,49 +111,9 @@ class _AlarmScreenState extends State<AlarmScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                       ),
                       onPressed: (){
-                        showModalBottomSheet(context: context, builder: (context){
-                          return Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)
-                            ),
-                            child: Column(
-                              children: [
-                                Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 20.0),
-                                    child: Text("Add Alarm", style: TextStyle(
-                                      fontFamily: 'avenir',
-                                      fontSize: 20,
-
-                                    ),),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(30, 20, 30, 0),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        'Set time', style: TextStyle(
-                                        fontFamily: 'avenir',
-                                        fontSize: 20
-                                      ),
-                                      ),
-                                      IconButton(onPressed: (){}, icon: Icon(
-                                        Icons.keyboard_arrow_right
-                                      ),
-                                      )
-                                    ],
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  )
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                        );
-
-
-                        // scheduleAlarm();
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return AddAlarmScreen();
+                        }));
                       },
                     ),
                   ),
@@ -178,7 +139,7 @@ void scheduleAlarm ()  async{
   var androidPlatformChannelSpecifics = AndroidNotificationDetails('alarm_notif', 'alarm_notif', 'Channel for Alarm Notification', icon: 'clock', sound: RawResourceAndroidNotificationSound('sound'), largeIcon: DrawableResourceAndroidBitmap('clock'));
 
   var iOSPlatformChannelSpecifics = IOSNotificationDetails(
-    sound: '',
+    sound: '', // Developing on Windows hence playing another sound for IOS devices is not possible
     presentAlert: true,
     presentBadge: true,
     presentSound: true

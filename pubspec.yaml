@@ -19,6 +19,7 @@ dependencies:
   flutter_local_notifications: ^8.2.0
   sqflite: ^2.0.0+4
   dotted_border: ^2.0.0+1
+  flash: ^2.0.3
 
 dev_dependencies:
   flutter_test:
