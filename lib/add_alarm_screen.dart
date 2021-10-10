@@ -3,14 +3,15 @@ import 'package:weather_alarm_app/constants/custom_app_bar.dart';
 import 'package:flash/flash.dart';
 import 'package:weather_alarm_app/constants/text_style.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter/rendering.dart' show Alignment, BorderRadius, BoxDecoration, BoxShadow, Color, CrossAxisAlignment, EdgeInsets, FontWeight, LinearGradient, MainAxisAlignment, Offset, Radius, Size, TextStyle;
-import 'package:flutter/widgets.dart';
 import 'package:weather_alarm_app/main.dart';
+import 'package:weather_alarm_app/models/alarm_info.dart';
 import 'constants/custom_app_bar.dart';
+import 'data/data.dart';
+import 'constants/text_style.dart';
 
 
 late String DateText = 'Set date';
-late DateTime date = DateTime.now();
+late DateTime date;
 late TimeOfDay time = TimeOfDay.now();
 
 
@@ -45,6 +46,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
   void showErrorDateFlash({
     Duration? duration,
     flashStyle = FlashBehavior.floating,
+    String? text,
   }) {
     showFlash(
       context: context,
@@ -57,7 +59,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
           boxShadows: kElevationToShadow[4],
           horizontalDismissDirection: HorizontalDismissDirection.horizontal,
           child: FlashBar(
-            content: Center(child: Text('Date invalid. Please try again!')),
+            content: Center(child: Text(text!)),
           ),
         );
       },
@@ -66,12 +68,12 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
 
   Future pickDate(BuildContext context) async {
     final initialDate = DateTime.now();
-    final newDate = await showDatePicker(context: context, initialDate: initialDate, firstDate: DateTime(DateTime.now().year), lastDate: DateTime(DateTime.now().year + 5));
+    final newDate = await showDatePicker(context: context, initialDate: date == null ? initialDate : date, firstDate: DateTime(DateTime.now().year), lastDate: DateTime(DateTime.now().year + 5));
 
     if(newDate == null) return;
     if(newDate.isBefore(DateTime.now()))
     {
-      showErrorDateFlash();
+      showErrorDateFlash(duration: Duration(seconds: 10), text: 'Date Invalid. Please try again!');
       return;
     }
     setState(() {
@@ -97,6 +99,12 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){
+        DateTime finalDateTime =  DateTime(date.year, date.month, date.day, time.hour, time.minute);
+
+
+        var alarmInfo  = AlarmInfo( title: 'temp Title', dateTime: finalDateTime, gradientColorIndex: alarms.length, id: alarms.length, isPending: true);
+
+
       }, child: Icon(Icons.add,),),
       backgroundColor: Color(0xff2E2E42),
       appBar: PreferredSize(preferredSize: Size.fromHeight(50),
@@ -106,6 +114,8 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Text('Enter title for the Alarm:'),
+
             MaterialButton(onPressed: (){pickDate(context);},
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,9 +148,6 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
     );
   }
 }
-
-
-
 
 
 void scheduleAlarm ()  async{
