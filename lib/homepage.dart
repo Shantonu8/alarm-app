@@ -139,6 +139,7 @@ class _HomePageState extends State<HomePage>
                 style: TextStyle(
                     fontSize: 15,
                     color:  Colors.white,
+                  fontFamily: 'avenir'
                 ),
               ),
             ),
