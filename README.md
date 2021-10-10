@@ -1,4 +1,4 @@
-# weather_alarm_app
+# Weather Alarm App
 
 A new Flutter project.
 
