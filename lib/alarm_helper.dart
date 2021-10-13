@@ -5,27 +5,27 @@ import 'package:weather_alarm_app/models/alarm_info.dart';
 final String tableName = 'alarm';
 final String id = 'id';
 final String title = 'title';
-final String DateTime = 'dataTime';
+final String dateTime = 'dataTime';
 final String pending = 'isPending';
 final String color = 'gradientColorIndex';
 
 class AlarmHelper{
-  static late  Database _database;
-  static late AlarmHelper _alarmHelper;
+  static Database? _database;
+  static AlarmHelper? _alarmHelper;
 
   AlarmHelper._createInstance();
    factory AlarmHelper() {
     if (_alarmHelper == null){
       _alarmHelper = AlarmHelper._createInstance();
     }
-    return _alarmHelper;
+    return _alarmHelper!;
   }
 
-  Future<Database> get database async{
+  Future<Database?> get database async{
     if (_database == null){
       _database = await initializeDatabase();
     }
-    return _database;
+    return _database!;
   }
   Future<Database> initializeDatabase() async{
     var dir = await getDatabasesPath();
@@ -37,7 +37,7 @@ class AlarmHelper{
       create table $tableName(
         $id integer primary key autoincrement,
         $title text not null,
-        $DateTime text not null,
+        $dateTime text not null,
         $pending integer,
         $color integer
       )
@@ -51,7 +51,7 @@ class AlarmHelper{
 
   void insetAlarm(AlarmInfo alarmInfo) async{
      var db = await this.database;
-     var result  = await db.insert(tableName, alarmInfo.toMap());
+     var result  = await db?.insert(tableName, alarmInfo.toMap());
      print(result);
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_alarm_app/alarm_helper.dart';
 import 'package:weather_alarm_app/constants/custom_app_bar.dart';
 import 'package:flash/flash.dart';
 import 'package:weather_alarm_app/constants/text_style.dart';
@@ -11,9 +12,9 @@ import 'constants/text_style.dart';
 
 
 late String DateText = 'Set date';
-late DateTime date;
+late DateTime date = DateTime.now();
 late TimeOfDay time = TimeOfDay.now();
-
+late String title;
 
 
 
@@ -25,8 +26,18 @@ class AddAlarmScreen extends StatefulWidget {
 
 class _AddAlarmScreenState extends State<AddAlarmScreen> {
 
-
-
+  AlarmHelper _alarmHelper = AlarmHelper();
+  
+  @override
+  void initState() {
+    print(DateTime.now());
+    _alarmHelper.initializeDatabase().whenComplete(() => print('-----dB initialized'));
+    super.initState();
+  }
+  
+  
+  
+  // Methods
   String getDate(){
     if (date == null) return 'Select Date';
     else{
@@ -41,7 +52,6 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
       return "$hour:$minute";
     }
   }
-
 
   void showErrorDateFlash({
     Duration? duration,
@@ -90,11 +100,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
     });
   }
 
-@override
-  void initState() {
-    print(DateTime.now());
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +108,9 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
         DateTime finalDateTime =  DateTime(date.year, date.month, date.day, time.hour, time.minute);
 
 
-        var alarmInfo  = AlarmInfo( title: 'temp Title', dateTime: finalDateTime, gradientColorIndex: alarms.length, id: alarms.length, isPending: true);
+        var alarmInfo  = AlarmInfo( title: title, dateTime: finalDateTime, gradientColorIndex: alarms.length, id: alarms.length, isPending: true);
+
+        _alarmHelper.insetAlarm(alarmInfo);
 
 
       }, child: Icon(Icons.add,),),
@@ -112,11 +120,17 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 42.0, vertical: 10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Enter title for the Alarm:'),
-
+            Text('Enter title for the Alarm:', style: CustomTextStyle.customTextStyle(20),),
+            TextField(
+              onChanged: (text){
+                title = text;
+              },
+              style: CustomTextStyle.customTextStyle(15),
+            ),
             MaterialButton(onPressed: (){pickDate(context);},
+              padding: EdgeInsets.zero,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -130,6 +144,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
                 ],
               ),),
             MaterialButton(onPressed: (){pickTime(context);},
+              padding: EdgeInsets.zero,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_alarm_app/clock_view.dart';
 import 'package:weather_alarm_app/constants/custom_app_bar.dart';

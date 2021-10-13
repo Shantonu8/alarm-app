@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:weather_alarm_app/alarmscreen.dart';
 import 'package:weather_alarm_app/start_screen.dart';
-import 'homepage.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart' show Alignment, BorderRadius, BoxDecoration, BoxShadow, Color, CrossAxisAlignment, EdgeInsets, FontWeight, LinearGradient, MainAxisAlignment, Offset, Radius, Size, TextStyle;
-import 'package:flutter/widgets.dart';
 import 'package:weather_alarm_app/add_alarm_screen.dart';
-import 'package:weather_alarm_app/main.dart';
 import 'constants/custom_app_bar.dart';
 import 'data/data.dart';
 import 'package:dotted_border/dotted_border.dart';
