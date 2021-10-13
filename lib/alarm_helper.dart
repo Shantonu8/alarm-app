@@ -1,12 +1,12 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:weather_alarm_app/models/alarm_info.dart';
+import 'data/data.dart';
 
 
 final String tableName = 'alarm';
 final String id = 'id';
 final String title = 'title';
-final String dateTime = 'dataTime';
-final String pending = 'isPending';
+final String dateTime = 'dateTime';
 final String color = 'gradientColorIndex';
 
 class AlarmHelper{
@@ -38,7 +38,6 @@ class AlarmHelper{
         $id integer primary key autoincrement,
         $title text not null,
         $dateTime text not null,
-        $pending integer,
         $color integer
       )
       ''');
@@ -53,6 +52,22 @@ class AlarmHelper{
      var db = await this.database;
      var result  = await db?.insert(tableName, alarmInfo.toMap());
      print(result);
+  }
+
+
+  Future<List<AlarmInfo>> getAlarm() async{
+    var result;
+    var db = await this.database;
+
+      result = await db?.query(tableName);
+
+     result.forEach((element) { 
+      var alarmInfo  = AlarmInfo.fromMap(element);
+      alarms.add(alarmInfo);
+      }
+      );
+
+      return alarms;
   }
 
 }

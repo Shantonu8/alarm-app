@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:weather_alarm_app/models/alarm_info.dart';
 
 List<AlarmInfo> alarms = [
- AlarmInfo(id: 1, title: 'Office', dateTime: DateTime.now(), isPending: true, gradientColorIndex: 1)
 ];
 
 

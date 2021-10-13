@@ -31,7 +31,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
   @override
   void initState() {
     print(DateTime.now());
-    _alarmHelper.initializeDatabase().whenComplete(() => print('-----dB initialized'));
+    _alarmHelper.initializeDatabase().then((value) => print('------------dB initialized'));
     super.initState();
   }
   
@@ -108,7 +108,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
         DateTime finalDateTime =  DateTime(date.year, date.month, date.day, time.hour, time.minute);
 
 
-        var alarmInfo  = AlarmInfo( title: title, dateTime: finalDateTime, gradientColorIndex: alarms.length, id: alarms.length, isPending: true);
+        var alarmInfo  = AlarmInfo( title: title, dateTime: finalDateTime, gradientColorIndex: alarms.length, id: alarms.length);
 
         _alarmHelper.insetAlarm(alarmInfo);
 
