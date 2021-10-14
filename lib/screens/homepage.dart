@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weather_alarm_app/clock_view.dart';
+import 'package:weather_alarm_app/models/clock_view.dart';
 import 'package:weather_alarm_app/constants/custom_app_bar.dart';
-import 'constants/clock_info.dart';
-import 'constants/custom_app_bar.dart';
+import '../databases/alarm_helper.dart';
+import '../constants/clock_info.dart';
+import '../constants/custom_app_bar.dart';
 var now = DateTime.now();
 var nowDate = now.day.toString();
 var nowDay = now.weekday;
@@ -99,6 +100,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
+
     print(now);
     super.initState();
   }

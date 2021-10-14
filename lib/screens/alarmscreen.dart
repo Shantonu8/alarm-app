@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:weather_alarm_app/add_alarm_screen.dart';
-import 'constants/custom_app_bar.dart';
-import 'data/data.dart';
+import 'package:weather_alarm_app/screens/add_alarm_screen.dart';
+import '../constants/custom_app_bar.dart';
+import '../data/data.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'alarm_helper.dart';
-import 'models/alarm_info.dart';
+import '../databases/alarm_helper.dart';
+import '../models/alarm_info.dart';
 
 class AlarmScreen extends StatefulWidget {
   const AlarmScreen({Key? key}) : super(key: key);
@@ -19,10 +19,20 @@ class _AlarmScreenState extends State<AlarmScreen> {
   Future<List<AlarmInfo>>? _alarms;
 
   @override
+  void deactivate() {
+    super.deactivate();
+  }
+
+
+  @override
   void initState() {
     _alarmHelper.initializeDatabase().then((value) => print('------------dB initialized'));
+    alarms = [];
     _alarms = _alarmHelper.getAlarm();
     super.initState();
+
+
+
   }
 
   @override
@@ -62,8 +72,9 @@ class _AlarmScreenState extends State<AlarmScreen> {
                                 Colors.white, fontFamily: 'avenir'),),
                               ],
                             ),
-                            Switch(value: true, onChanged: (bool value){},
-                              activeColor: Colors.white,)
+                            SizedBox(
+                              height: 45,
+                            )
                           ],
                         ),
                         Text('Mon-Fri', style: TextStyle(color:
@@ -71,12 +82,16 @@ class _AlarmScreenState extends State<AlarmScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('07:00 AM', style: TextStyle(color:
+                            Text( alarms.dateTime.hour.toString().padLeft(2, "0") + ":" + alarms.dateTime.minute.toString().padLeft(2, "0") , style: TextStyle(color:
                             Colors.white, fontFamily: 'avenir',
                                 fontWeight: FontWeight.w700,
                                 fontSize: 24),),
-                            Icon(Icons.keyboard_arrow_down,size: 36,
-                              color: Colors.white,)
+                            IconButton(onPressed: (){
+                              _alarmHelper.deleteAlarm(alarms.id);
+                              setState(() {
+                              });
+                              initState();
+                            }, icon: Icon(Icons.delete, color: Colors.white, size: 24,))
                           ],
                         ),
                       ],

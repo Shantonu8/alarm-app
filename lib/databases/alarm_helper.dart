@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:weather_alarm_app/models/alarm_info.dart';
-import 'data/data.dart';
+import '../data/data.dart';
 
 
 final String tableName = 'alarm';
@@ -8,6 +8,7 @@ final String id = 'id';
 final String title = 'title';
 final String dateTime = 'dateTime';
 final String color = 'gradientColorIndex';
+final String isPending = 'isPending';
 
 class AlarmHelper{
   static Database? _database;
@@ -38,7 +39,8 @@ class AlarmHelper{
         $id integer primary key autoincrement,
         $title text not null,
         $dateTime text not null,
-        $color integer
+        $color integer,
+        $isPending integer not null
       )
       ''');
     }
@@ -70,4 +72,12 @@ class AlarmHelper{
       return alarms;
   }
 
+  void deleteAlarm(idOfAlarm) async{
+     var db = await this.database;
+
+     db?.delete(tableName, where: 'id = ?', whereArgs: [idOfAlarm]);
+  }
+
+
 }
+

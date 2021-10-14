@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:weather_alarm_app/alarm_helper.dart';
+import 'package:weather_alarm_app/databases/alarm_helper.dart';
 import 'package:weather_alarm_app/constants/custom_app_bar.dart';
 import 'package:flash/flash.dart';
 import 'package:weather_alarm_app/constants/text_style.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:weather_alarm_app/main.dart';
 import 'package:weather_alarm_app/models/alarm_info.dart';
-import 'constants/custom_app_bar.dart';
-import 'data/data.dart';
-import 'constants/text_style.dart';
+import '../constants/custom_app_bar.dart';
+import '../data/data.dart';
+import '../constants/text_style.dart';
 
 
 late String DateText = 'Set date';
@@ -27,16 +27,20 @@ class AddAlarmScreen extends StatefulWidget {
 class _AddAlarmScreenState extends State<AddAlarmScreen> {
 
   AlarmHelper _alarmHelper = AlarmHelper();
-  
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+
   @override
   void initState() {
     print(DateTime.now());
-    _alarmHelper.initializeDatabase().then((value) => print('------------dB initialized'));
     super.initState();
   }
   
-  
-  
+
   // Methods
   String getDate(){
     if (date == null) return 'Select Date';
@@ -101,19 +105,20 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){
+      floatingActionButton: FloatingActionButton(onPressed: () async{
         DateTime finalDateTime =  DateTime(date.year, date.month, date.day, time.hour, time.minute);
-
-
-        var alarmInfo  = AlarmInfo( title: title, dateTime: finalDateTime, gradientColorIndex: alarms.length, id: alarms.length);
-
+        if(title == null){
+          showErrorDateFlash(duration: Duration(seconds: 10), text: 'Add a title');
+          return;
+        }
+        var alarmInfo  = AlarmInfo( title: title, dateTime: finalDateTime, gradientColorIndex: alarms.length, id: alarms.length, isPending: 0);
         _alarmHelper.insetAlarm(alarmInfo);
-
-
-      }, child: Icon(Icons.add,),),
+        Navigator.pop(context);
+      }, child: Icon(Icons.check,),),
       backgroundColor: Color(0xff2E2E42),
       appBar: PreferredSize(preferredSize: Size.fromHeight(50),
           child: CustomAppBar("Add Alarm")),
@@ -165,7 +170,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
 }
 
 
-void scheduleAlarm ()  async{
+void scheduleAlarm (String title)  async{
   var scheduleNotificationDateTime = DateTime(date.year, date.month, date.day, time.hour, time.minute);
   var androidPlatformChannelSpecifics = AndroidNotificationDetails('alarm_notif', 'alarm_notif', 'Channel for Alarm Notification', icon: 'clock', sound: RawResourceAndroidNotificationSound('sound'), largeIcon: DrawableResourceAndroidBitmap('clock'));
 
@@ -176,7 +181,10 @@ void scheduleAlarm ()  async{
       presentSound: true
   );
   var platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics); await flutterLocalNotificationsPlugin.schedule(0, 'Office', 'Time for Office! Good Morning', scheduleNotificationDateTime, platformChannelSpecifics);
+      android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics); await flutterLocalNotificationsPlugin.schedule(0, title, 'Alarm Ringing', scheduleNotificationDateTime, platformChannelSpecifics);
+
+
+
 }
 
 

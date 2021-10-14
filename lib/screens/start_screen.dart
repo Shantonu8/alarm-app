@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_alarm_app/homepage.dart';
+import 'package:weather_alarm_app/screens/homepage.dart';
 
 import 'alarmscreen.dart';
 
