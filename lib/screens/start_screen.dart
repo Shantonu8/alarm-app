@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_alarm_app/screens/homepage.dart';
+import 'package:weather_alarm_app/screens/stopwatch_screen.dart';
 
 import 'alarmscreen.dart';
 
@@ -15,7 +16,8 @@ class _StartScreenState extends State<StartScreen> {
   int index = 0;
   final screens = [
     HomePage(),
-    AlarmScreen()
+    AlarmScreen(),
+    StopwatchScreen(),
   ];
 
   @override
