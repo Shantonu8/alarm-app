@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:weather_alarm_app/constants/clock_info.dart';
 import 'package:weather_alarm_app/screens/add_alarm_screen.dart';
 import '../constants/custom_app_bar.dart';
 import '../data/data.dart';
@@ -10,10 +13,10 @@ class AlarmScreen extends StatefulWidget {
   const AlarmScreen({Key? key}) : super(key: key);
 
   @override
-  _AlarmScreenState createState() => _AlarmScreenState();
+  AlarmScreenState createState() => AlarmScreenState();
 }
 
-class _AlarmScreenState extends State<AlarmScreen> {
+class AlarmScreenState extends State<AlarmScreen> {
 
   AlarmHelper _alarmHelper = AlarmHelper();
   Future<List<AlarmInfo>>? _alarms;
@@ -29,9 +32,56 @@ class _AlarmScreenState extends State<AlarmScreen> {
     _alarmHelper.initializeDatabase().then((value) => print('------------dB initialized'));
     alarms = [];
     _alarms = _alarmHelper.getAlarm();
+
+
     super.initState();
 
 
+
+
+  }
+
+  String findMonth (month){
+    if (month == 1) {
+      return "January";
+    }
+    if (month == 2) {
+      return "February";
+    }
+    if (month == 3) {
+      return "March";
+    }
+    if (month == 4) {
+      return "April";
+    }
+    if (month == 5) {
+      return "May";
+    }
+    if (month == 6) {
+      return "June";
+    }
+    if (month == 7) {
+      return "July";
+    }
+    if (month == 8) {
+      return "August";
+    }
+    if (month == 9) {
+      return "September";
+    }
+    if (month == 10) {
+      return "October";
+    }
+    if (month == 11) {
+      return "November";
+    }
+    if (month == 12) {
+      return "December";
+    }
+
+    else {
+      return "error";
+    }
 
   }
 
@@ -77,7 +127,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                             )
                           ],
                         ),
-                        Text('Mon-Fri', style: TextStyle(color:
+                        Text('${alarms.dateTime.day.toString()} of ${findMonth(alarms.dateTime.month.toInt())}', style: TextStyle(color:
                         Colors.white, fontFamily: 'avenir'),),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

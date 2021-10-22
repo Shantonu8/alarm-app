@@ -96,7 +96,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
   }
 
   Future pickTime(BuildContext context) async {
-    final newTime = await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    final newTime = await showTimePicker(context: context, initialTime: time == null ? TimeOfDay.now() :  time);
 
     if(newTime == null) return;
     setState(() {
