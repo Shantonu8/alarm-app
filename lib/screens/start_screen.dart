@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:weather_alarm_app/screens/homepage.dart';
 import 'package:weather_alarm_app/screens/stopwatch_screen.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:weather_alarm_app/data/data_service.dart';
 import 'alarmscreen.dart';
 
 
@@ -17,12 +15,7 @@ class StartScreen extends StatefulWidget {
 
 class _StartScreenState extends State<StartScreen> {
 
-  void _getCurrentLocationAndWeather() async{
-    final position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    DataService().getWeather(position.latitude.toString(), position.longitude.toString());
-    print(position) ;
-
-  }
+ 
 
   int index = 0;
   final screens = [
@@ -33,7 +26,6 @@ class _StartScreenState extends State<StartScreen> {
 
   @override
   void initState() {
-    _getCurrentLocationAndWeather();
     super.initState();
   }
 

@@ -117,6 +117,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
         }
         var alarmInfo  = AlarmInfo( title: title, dateTime: finalDateTime, gradientColorIndex: alarms.length, id: alarms.length, isPending: 0);
         _alarmHelper.insetAlarm(alarmInfo);
+        scheduleAlarm(title, finalDateTime);
         Navigator.pop(context);
       }, child: Icon(Icons.check,),),
       backgroundColor: Color(0xff2E2E42),
@@ -170,7 +171,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
 }
 
 
-void scheduleAlarm (String title)  async{
+void scheduleAlarm (String title, DateTime date)  async{
   var scheduleNotificationDateTime = DateTime(date.year, date.month, date.day, time.hour, time.minute);
   var androidPlatformChannelSpecifics = AndroidNotificationDetails('alarm_notif', 'alarm_notif', 'Channel for Alarm Notification', icon: 'clock', sound: RawResourceAndroidNotificationSound('sound'), largeIcon: DrawableResourceAndroidBitmap('clock'));
 

@@ -1,1 +1,1 @@
-# Weather Alarm App
+# Alarm App
