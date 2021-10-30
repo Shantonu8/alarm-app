@@ -9,6 +9,8 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterL
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+
+
   var initializationSettingsAndroid =
   AndroidInitializationSettings('clock');
   var initializationSettingsIOS = IOSInitializationSettings(

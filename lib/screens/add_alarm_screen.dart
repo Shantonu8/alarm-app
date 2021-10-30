@@ -183,8 +183,6 @@ void scheduleAlarm (String title)  async{
   var platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics); await flutterLocalNotificationsPlugin.schedule(0, title, 'Alarm Ringing', scheduleNotificationDateTime, platformChannelSpecifics);
 
-
-
 }
 
 
